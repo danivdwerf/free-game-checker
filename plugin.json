@@ -1,10 +1,10 @@
 {
-    "name": "Example Plugin",
-    "author": "John Doe",
-    "flags": ["debug", "_root"],
+    "name": "Free game checker",
+    "author": "Dani Krokkee",
+    "flags": ["debug"],
     "publish": {
-        "tags": ["template", "root"],
-        "description": "Decky example plugin.",
+        "tags": ["free", "game", "epic", "gog", "amazon"],
+        "description": "Decky plugin to check for free games on epix, gog and amazon",
         "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
     }
 }

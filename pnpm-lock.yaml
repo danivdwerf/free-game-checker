@@ -8,7 +8,8 @@ specifiers:
   '@rollup/plugin-typescript': ^8.3.3
   '@types/react': 16.14.0
   '@types/webpack': ^5.28.0
-  decky-frontend-lib: ^3.18.10
+  decky-frontend-lib: ^3.19.2
+  pnpm: ^7.30.3
   react-icons: ^4.4.0
   rollup: ^2.77.1
   rollup-plugin-import-assets: ^1.1.1
@@ -17,7 +18,7 @@ specifiers:
   typescript: ^4.7.4
 
 dependencies:
-  decky-frontend-lib: 3.18.10
+  decky-frontend-lib: 3.19.2
   react-icons: 4.4.0
 
 devDependencies:
@@ -28,6 +29,7 @@ devDependencies:
   '@rollup/plugin-typescript': 8.3.3_ekpmegaybmymq5m2rlmygb35zm
   '@types/react': 16.14.0
   '@types/webpack': 5.28.0
+  pnpm: 7.30.3
   rollup: 2.77.1
   rollup-plugin-import-assets: 1.1.1_rollup@2.77.1
   shx: 0.3.4
@@ -418,8 +420,8 @@ packages:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
     dev: true
 
-  /decky-frontend-lib/3.18.10:
-    resolution: {integrity: sha512-2mgbA3sSkuwQR/FnmhXVrcW6LyTS95IuL6muJAmQCruhBvXapDtjk1TcgxqMZxFZwGD1IPnemPYxHZll6IgnZw==}
+  /decky-frontend-lib/3.19.2:
+    resolution: {integrity: sha512-J8QYlzi+FEwwoDxoUOhq+BvRO1bdg8O60oxyfcRF7nLalGPrRyaXx4MNNP117X/RY7smPF1xigjglNthdv9Yzw==}
     dev: false
 
   /deepmerge/4.2.2:
@@ -668,6 +670,12 @@ packages:
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /pnpm/7.30.3:
+    resolution: {integrity: sha512-Z/pNEfZF45OwdZSUAeSTYySs27UW+GG4AQ2iXz4u127QVtkCMCeyrMNZmb/17BazaZTtvXqk/+jxTVkyh8apIA==}
+    engines: {node: '>=14.6'}
+    hasBin: true
     dev: true
 
   /punycode/2.1.1:
