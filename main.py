@@ -25,7 +25,7 @@ class Plugin:
         return settings.getSetting(key, defaults)
 
     async def setSetting(self, key: str, value):
-        loggin.info("Set setting: '{}': {}").format(key, value)
+        logger.info("Set setting: '{}': {}".format(key, value))
         return settings.setSetting(key, value)
     
     async def log(self, message: str):
