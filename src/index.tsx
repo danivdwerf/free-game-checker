@@ -4,13 +4,15 @@ import {definePlugin, PanelSection, ServerAPI, staticClasses} from "decky-fronte
 
 // Lib
 import EpicGameService from "./lib/game-services/EpicGameService";
+import AmazonGameService from "./lib/game-services/AmazonGameService";
 
 // Components
 import Service from "./components/Service";
 
 const Content: VFC<{serverAPI: ServerAPI}> = ({serverAPI})=> {
     const services = [
-        new EpicGameService(serverAPI)
+        new EpicGameService(serverAPI),
+        new AmazonGameService(serverAPI)
     ];
 
     return (
