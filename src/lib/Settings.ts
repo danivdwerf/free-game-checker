@@ -9,12 +9,12 @@ export default class Settings
      * @param defaultValue Default value to return if setting doesn't exist
      * @returns 
      */
-    static async getSetting<T>(key: string, defaultValue: T): Promise<string | {}>
+    static async getSetting<T>(key: string, defaultValue: T): Promise<T>
     {
         return await Backend.callMethod("getSetting", {
             key: key,
             defaults: defaultValue
-        });
+        }) as T;
     }
 
     /**
