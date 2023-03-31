@@ -1,4 +1,4 @@
-import {FaShip} from "react-icons/fa";
+import {FaMoneyBill} from "react-icons/fa";
 import {definePlugin, PanelSection, ServerAPI, staticClasses} from "decky-frontend-lib";
 
 // Types
@@ -41,13 +41,10 @@ const sendToast = ()=>
     });
 };
 
-const Content: VFC = ()=> {
-    return (
-        <PanelSection>
-            {services.map((service)=> <Service service={service} />)}
-        </PanelSection>
-    );
-};
+const Content: VFC = ()=>
+    <PanelSection>
+        {services.map((service)=> <Service service={service} />)}
+    </PanelSection>
 
 export default definePlugin((serverApi: ServerAPI)=> {
     Backend.initialize(serverApi);
@@ -58,7 +55,7 @@ export default definePlugin((serverApi: ServerAPI)=> {
     return {
         title: <div className={staticClasses.Title}>Free Game Checker</div>,
         content: <Content />,
-        icon: <FaShip />,
+        icon: <FaMoneyBill />,
         onDismount(){
             clearInterval(interval);
         }
