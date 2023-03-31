@@ -6,5 +6,27 @@
     "deckdir"   : "/home/deck",
     "python.analysis.extraPaths": [
         "./py_modules"
-    ]
+    ],
+
+    "files.exclude": {
+        "LICENSE": true,
+        "**/.git": true,
+        "README.md": true,
+        ".gitignore": true,
+
+        "dist": true,
+        "yarn.lock": true,
+        "node_modules": true,
+        "rollup.config.js": true,
+
+        "py_modules": true,
+        "pnpm-lock.yaml": true,
+        "decky_plugin.pyi": true,
+
+        "Makefile": true,
+        "tsconfig.json": true,
+
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    }
 }
