@@ -1,3 +1,4 @@
+import Backend from "../Backend";
 import GameService from "./GameService";
 
 export default class EpicGameService extends GameService {
@@ -6,7 +7,7 @@ export default class EpicGameService extends GameService {
     private _apiURL: string = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions";
 
     private async _loadData(): Promise<EpicGamesResponse> {
-        const fetchResponse = await this._serverAPI!.fetchNoCors(this._apiURL, {
+        const fetchResponse = await Backend.server.fetchNoCors(this._apiURL, {
             method: "GET",
             headers: {
                 Accept: "application/json"
@@ -20,7 +21,7 @@ export default class EpicGameService extends GameService {
         let response: EpicGamesResponse;
         try {response = await this._loadData()}
         catch(error){
-            this._serverAPI!.callPluginMethod("log", {message: `Failed to load Epic Games api: ${error}`});
+            Backend.callMethod("log", {message: `Failed to load Epic Games api: ${error}`});
             return [];
         }
 

@@ -6,12 +6,24 @@ import GameService from "../lib/game-services/GameService";
 const Service: VFC<{service: GameService}> = ({service})=> {
     const [results, setResults] = useState<Game[] | null>(null);
 
-    useEffect(()=>
+    const onResults = (games: Game[])=>
+    {
+        setResults(games);
+        
+        games.forEach((game: Game)=>
+        {
+            
+        });
+    };
+
+    const onMounted = ()=>
     {
         service.loadFreeGames()
-            .then(games=> setResults(games))
+            .then(onResults)
             .catch(console.error);
-    }, []);
+    };
+
+    useEffect(onMounted, []);
 
     return (
         <PanelSectionRow>
