@@ -1,10 +1,10 @@
 {
     "name": "Free game checker",
     "author": "Dani Krokkee",
-    "flags": ["debug"],
+    "flags": [],
     "publish": {
-        "tags": ["free", "game", "epic", "gog", "amazon"],
+        "tags": ["free games", "utility", "epic game store"],
         "description": "Decky plugin to check for free games on epix, gog and amazon",
-        "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+        "image": "https://opengraph.githubassets.com/1/danivdwerf/free-game-checker"
     }
 }
