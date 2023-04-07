@@ -1,7 +1,7 @@
 {
     "name": "Free game checker",
     "author": "Dani Krokkee",
-    "flags": [],
+    "flags": ["debug"],
     "publish": {
         "tags": ["free games", "utility", "epic game store"],
         "description": "Decky plugin to check for free games on epix, gog and amazon",
