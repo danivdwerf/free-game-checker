@@ -127,3 +127,74 @@ declare interface EpicGamesResponse {
 
     };
 };
+
+declare interface GOGMeta {
+    name: string;
+    slug: string
+};
+
+
+declare interface GOGItem {
+    id: string;
+    slug: string;
+    features: GOGMeta[];
+    screenshots: string[];
+    userPreferredLanguage: {
+        code: string;
+        inAudio: boolean;
+        inText: boolean;
+    };
+    releaseDate: string;
+    productType: string;
+    title: string;
+    coverHorizontal: string;
+    coverVertical: string;
+    developers: string[];
+    publishers: string[];
+    operatingSystems: string[];
+    price: {
+        final: string;
+        base: string;
+        discount: string;
+        finalMoney: {
+            amount: string;
+            currency: string;
+        };
+        baseMoney: {
+            amount: string;
+            currency: string;
+        };
+    };
+    productState: string;
+    genres: GOGMeta[];
+    tags: GOGMeta[];
+    reviewsRating: number;
+};
+
+declare interface GOGResponse {
+    pages: number;
+    productCount: number;
+    products: GOGItem[];
+    filters: {
+        releaseDateRange: {
+            min: number; 
+            max: number;
+        };
+        priceRange: {
+            min: number; 
+            max: number;
+            currency: string; 
+            decimalPlaces: number;
+        }
+        genres: GOGMeta[];
+        languages: GOGMeta[];
+        systems: GOGMeta[];
+        tags: GOGMeta[];
+        discounted: boolean;
+        features: GOGMeta[];
+        releaseStatuses: GOGMeta[];
+        types: string[];
+        fullGenresList: GOGMeta[];
+        fullTagsList: GOGMeta[];
+    };
+};
