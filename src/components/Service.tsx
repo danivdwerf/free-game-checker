@@ -51,7 +51,7 @@ const Service: VFC<{service: GameService}> = ({service})=> {
             }
 
             {results === null && <SteamSpinner />}
-            {results?.length === 0 && <p>No games available</p>}
+            {results?.length === 0 && <p>No items available</p>}
 
             {
                 !!results?.length &&
