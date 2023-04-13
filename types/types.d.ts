@@ -89,7 +89,7 @@ declare interface EpicGamesItem {
             }[];
         }[];
     };
-    promotions: {
+    promotions?: {
         promotionalOffers: {
             promotionalOffers: {
                 startDate: string;
