@@ -17,34 +17,23 @@ export default class EpicGameService extends GameService {
         return JSON.parse((fetchResponse.result as any).body);
     };
 
-    public override async loadFreeGames(): Promise<Game[]> {
-        let response: EpicGamesResponse;
-        try {response = await this._loadData()}
-        catch(error){
-            Backend.callMethod("log", {message: `Failed to load Epic Games api: ${error}`});
-            return [];
-        }
-
-        const elements = response?.data?.Catalog?.searchStore?.elements ?? [];
-        
+    private _transformData(data: EpicGamesResponse): Game[] {
         const now = new Date();
+        const elements = data?.data?.Catalog?.searchStore?.elements ?? [];
         return elements
             .filter(game=> {
-                if (!game.promotions?.promotionalOffers || game.promotions?.promotionalOffers.length === 0)
+                // Filter out non-free games
+                if (game.price.totalPrice.originalPrice !== game.price.totalPrice.discount)
                     return false;
 
-                const currentOffer = game.promotions.promotionalOffers.find(promotion=> {
+                // Filter out previous or upcoming items
+                return !!game.promotions?.promotionalOffers.find(promotion=> {
                     return !!promotion.promotionalOffers.find(tmp=> {
                         const start = new Date(tmp.startDate);
                         const end = new Date(tmp.endDate);
                         return now >= start && now <= end;
                     })
                 });
-
-                if (!currentOffer)
-                    return false;
-                
-                return true;
             })
             .map(game=> {
                 const slug = game.catalogNs.mappings.find(mapping=> mapping.pageType === "productHome")?.pageSlug ?? "";
@@ -53,6 +42,21 @@ export default class EpicGameService extends GameService {
                     name: game.title,
                     page: `https://store.epicgames.com/en-US/p/${slug}`
                 };
-            }) ?? [];
+            });
     }
-}
+
+    public override async loadFreeGames(): Promise<Game[]> {
+        let response: EpicGamesResponse;
+        try {response = await this._loadData();}
+        catch(error) {
+            Backend.callMethod("log", {message: `Failed to load Epic Games api: ${error}`});
+            return [];
+        }
+    
+        try {return this._transformData(response);}
+        catch (error) {
+            Backend.callMethod("log", {message: `Failed to transform Epic Games response: ${error}`});
+            return [];
+        }
+    }
+};
