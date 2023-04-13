@@ -13,9 +13,11 @@ import EpicGameService from "./lib/game-services/EpicGameService";
 // Components
 import Settings from "./lib/Settings";
 import Service from "./components/Service";
+import GogService from "./lib/game-services/GogService";
 
 const services = [
-    new EpicGameService()
+    new EpicGameService(),
+    new GogService()
 ];
 
 const sendToast = ()=>
