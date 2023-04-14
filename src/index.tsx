@@ -1,58 +1,36 @@
 import {FaMoneyBill} from "react-icons/fa";
-import {definePlugin, PanelSection, ServerAPI, staticClasses} from "decky-frontend-lib";
+import {definePlugin, ServerAPI, staticClasses} from "decky-frontend-lib";
 
 // Types
 import type {VFC} from "react";
-import type GameService from "./lib/game-services/GameService";
 
 // Lib
+import Toast from "./lib/Toast";
 import Backend from "./lib/Backend";
-import {slugify} from "./lib/string-helper";
+
+import GogService from "./lib/game-services/GogService";
 import EpicGameService from "./lib/game-services/EpicGameService";
 
 // Components
-import Settings from "./lib/Settings";
 import Service from "./components/Service";
-import GogService from "./lib/game-services/GogService";
+import NotificationSettings from "./components/NotificationSettings";
 
 const services = [
     new EpicGameService(),
     new GogService()
 ];
 
-const sendToast = ()=>
-{
-    services.forEach(async (service: GameService)=>
-    {
-        const serviceSlug = slugify(service.ServiveName);
-        if (!await Settings.getSetting(serviceSlug, false))
-            return;
-
-        const games = await service.loadFreeGames();
-        games.forEach(async (game: Game)=>
-        {
-            const gameSlug = `${serviceSlug}-${slugify(game.name)}`;
-
-            // Already sent
-            if (await Settings.getSetting(gameSlug, false))
-                return;
-
-            await Settings.setSetting(gameSlug, true);
-            Backend.showToast(`New Game available for ${service.ServiveName}`, game.name)
-        });
-    });
-};
-
 const Content: VFC = ()=>
-    <PanelSection>
+    <div>
+        <NotificationSettings services={services} />
         {services.map((service)=> <Service service={service} />)}
-    </PanelSection>
+    </div>
 
 export default definePlugin((serverApi: ServerAPI)=> {
     Backend.initialize(serverApi);
     
-    sendToast();
-    const interval = setInterval(sendToast, 3600000);
+    Toast.sendToast(services);
+    const interval = setInterval(()=> Toast.sendToast(services), 10800000);
     
     return {
         title: <div className={staticClasses.Title}>Free Game Checker</div>,
