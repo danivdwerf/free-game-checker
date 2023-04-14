@@ -26,6 +26,11 @@ export default class Backend
         return output.result;
     }
 
+    public static log(...values: any[]): void
+    {
+        this.callMethod("log", {message: values.join("\r\n")});
+    }
+
     /**
      * Show toast with sound.
      * 
