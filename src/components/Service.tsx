@@ -1,7 +1,11 @@
 import {VFC, useState, useEffect} from "react";
 import {PanelSection, PanelSectionRow, ButtonItem, Navigation, SteamSpinner} from "decky-frontend-lib";
 
-import GameService from "../lib/game-services/GameService";
+// Types
+import type GameService from "../lib/game-services/GameService";
+
+// Lib
+import Backend from "../lib/Backend";
 
 const Service: VFC<{service: GameService}> = ({service})=> {
     const [results, setResults] = useState<Game[] | null>(null);
@@ -10,7 +14,7 @@ const Service: VFC<{service: GameService}> = ({service})=> {
     {
         service.loadFreeGames()
             .then(setResults)
-            .catch(console.error);
+            .catch(error=> Backend.log(`Failed to load games for service "${service.ServiveName}"`, error));
     };
 
     useEffect(onMounted, []);
