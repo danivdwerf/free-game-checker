@@ -41,14 +41,26 @@ export default class Toast {
      * @returns List of games
      */
     private static async _getUnsentToasts(service: GameService): Promise<Game[]> {
-        const games = await service.loadFreeGames();
-        return games.filter(async (game: Game)=> {
-            const gameSlug = `${slugify(service.ServiveName)}-${slugify(game.name)}`;
-            if (await Settings.getSetting(gameSlug, false))
-                return false;
-    
-            return true;
-        });
+        let games: Game[];
+        try {games = await service.loadFreeGames();}
+        catch(error) {
+            Backend.log(`Failed to load games for service "${service.ServiveName}"`, error);
+            games = [];
+        };
+
+        const response: Game[] = [];
+        for (let i = 0; i < games.length; i++) {
+            const gameSlug = `${slugify(service.ServiveName)}-${slugify(games[i].name)}`;
+
+            let isSent: boolean;
+            try {isSent = await Settings.getSetting(gameSlug, false);}
+            catch(error) {isSent = false;}
+
+            if (!isSent)
+                response.push(games[i]);
+        }
+
+        return response;
     };
 
     /**
@@ -58,10 +70,12 @@ export default class Toast {
      * @param games The games
      */
     private static async _sendIndividualGameNotifications(service: GameService, games: Game[]): Promise<void> {
-        games.forEach(async (game: Game)=> {
-            await Settings.setSetting(`${slugify(service.ServiveName)}-${slugify(game.name)}`, true);
+        for (let i = 0; i < games.length; i++) {
+            const game = games[i];
+            try {await Settings.setSetting(`${slugify(service.ServiveName)}-${slugify(game.name)}`, true);}
+            catch(error) {Backend.log("Failed to update notification sent setting for game", error);}
             Backend.showToast(`New game available for ${service.ServiveName}:`, game.name)
-        });
+        }
     };
 
     /**
@@ -72,14 +86,17 @@ export default class Toast {
      */
     private static async _sendServiceNotification(service: GameService, games: Game[]): Promise<void> {
         let hasSentNotification = false;
-        games.forEach(async (game: Game)=> {
-            await Settings.setSetting(`${slugify(service.ServiveName)}-${slugify(game.name)}`, true);
+
+        for (let i = 0; i < games.length; i++) {
+            const game = games[i];
+            try {await Settings.setSetting(`${slugify(service.ServiveName)}-${slugify(game.name)}`, true);}
+            catch(error) {Backend.log(`Failed to update notification sent setting for service "${service.ServiveName}"`, error);}
 
             if (!hasSentNotification) {
                 Backend.showToast(`New games available for ${service.ServiveName}:`, "Check out the plugin to see which games are free");
                 hasSentNotification = true;
             }
-        });
+        }
     }
 
     /**
@@ -97,8 +114,8 @@ export default class Toast {
         catch(error) {return Backend.log(`Failed to get game notification settings for "${service.ServiveName}"`, error);}
 
         if (this._usePerGameNotifications)
-            this._sendIndividualGameNotifications(service, newGames);
+            await this._sendIndividualGameNotifications(service, newGames);
         else
-            this._sendServiceNotification(service, newGames);
+            await this._sendServiceNotification(service, newGames);
     }
 };
